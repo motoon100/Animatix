@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>تحميل التطبيق - تصميم واحد ملف</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#0a0f5a;
+      --bg2:#10107a;
+      --accent:#2b5bff;
+      --card:#0f1b5f;
+      --glass: rgba(255,255,255,0.06);
+      --white: #ffffff;
+      --muted: rgba(255,255,255,0.85);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:'Cairo',sans-serif;background:linear-gradient(180deg,var(--bg1),#000);color:var(--white)}
+    .wrap{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 16px}
+    .card{width:360px;max-width:92vw;background:linear-gradient(180deg,#07104a 0%, #0b1b7a 70%);border-radius:18px;padding:18px 18px 26px;box-shadow:0 10px 30px rgba(2,6,40,0.6);position:relative;overflow:hidden}
+    .header{display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:10px}
+    .download-title{background:linear-gradient(90deg,#06123f,#162a9a);width:100%;padding:10px 12px;border-radius:10px;font-weight:800;letter-spacing:1px;font-size:20px}
+    .logo-wrap{margin-top:12px;margin-bottom:8px}
+    .logo{width:190px;height:120px;border-radius:14px;overflow:hidden}
+    .logo img{width:100%;height:100%;object-fit:cover;display:block}
+    .desc{font-size:14px;color:var(--muted);line-height:1.5;margin:12px 10px}
+    .features{margin-top:6px}
+    .features-title{font-size:26px;font-weight:800;text-align:center;margin:6px 0 12px}
+    .feat{background:rgba(0,0,0,0.18);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;margin:10px 6px}
+    .num{width:36px;height:36px;border-radius:50%;background:linear-gradient(180deg,#1f3be0,#1a2dd3);display:flex;align-items:center;justify-content:center;font-weight:700}
+    .feat-text{flex:1;font-size:14px;color:var(--white);line-height:1.35}
+    .ctas{margin-top:14px;display:flex;flex-direction:column;gap:10px;padding:10px}
+    .btn{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:10px;padding:12px;border-radius:10px;background:linear-gradient(90deg,#1534d7,#2b66ff);color:white;text-decoration:none;font-weight:700;box-shadow:0 6px 18px rgba(43,102,255,0.18);border:2px solid rgba(255,255,255,0.06);cursor:pointer;transition:transform 0.15s ease}
+    .btn.secondary{background:transparent;border:2px solid rgba(255,255,255,0.12);color:var(--white);font-weight:600}
+    .btn.small{padding:10px;border-radius:8px;font-size:14px}
+    .btn.glass::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -75px;
+      width: 50px;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.4);
+      transform: skewX(-20deg);
+      animation: glassShine 3s infinite;
+    }
+    @keyframes glassShine {
+      0% { left: -75px; }
+      50% { left: 120%; }
+      100% { left: 120%; }
+    }
+    .btn:active {transform: scale(0.94);}
+    .btn.loading{animation:pressAnim 650ms ease forwards}
+    @keyframes pressAnim{
+      0%{transform:scale(1);box-shadow:0 6px 18px rgba(43,102,255,0.18)}
+      50%{transform:scale(0.95);box-shadow:0 3px 10px rgba(43,102,255,0.12);filter:brightness(0.98)}
+      100%{transform:scale(1);}
+    }
+    .btn .loader{width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,0.9);opacity:0;transform:scale(0.6);margin-left:6px}
+    .btn.loading .loader{animation:loaderPop 800ms ease-in-out infinite}
+    @keyframes loaderPop{
+      0%{opacity:0;transform:scale(0.6)}
+      30%{opacity:1;transform:scale(1)}
+      70%{opacity:0.5;transform:scale(0.85)}
+      100%{opacity:0;transform:scale(0.6)}
+    }
+    .footer{text-align:center;font-size:20px;color:var(--muted);margin-top:12px}
+
+    /* موبايل صغير */
+    @media (max-width:420px){
+      .logo{width:100px;height:100px}
+      .download-title{font-size:18px}
+      .card{padding:14px}
+    }
+    /* تابلت */
+    @media (min-width: 768px) {
+      .card {width: 520px;padding: 24px 28px 36px;}
+      .download-title {font-size: 24px;padding: 14px;}
+      .logo {width: 240px;height: 150px;}
+      .desc {font-size: 16px;margin: 14px 12px;}
+      .features-title {font-size: 28px;}
+      .feat-text {font-size: 16px;}
+      .btn {font-size: 16px;padding: 14px;}
+    }
+    /* لابتوب متوسط */
+    @media (min-width: 1024px) {
+      .wrap {padding: 40px 0;}
+      .card {width: 640px;padding: 30px 36px 44px;}
+      .download-title {font-size: 28px;}
+      .logo {width: 300px;height: 180px;}
+      .desc {font-size: 18px;}
+      .features-title {font-size: 30px;}
+      .feat-text {font-size: 18px;}
+      .btn {font-size: 18px;padding: 16px;}
+      .footer {font-size: 14px;}
+    }
+    /* شاشات كبيرة جدًا (2K) */
+    @media (min-width: 1440px) {
+      .card {width: 720px;padding: 36px 44px 50px;}
+      .download-title {font-size: 32px;}
+      .logo {width: 340px;height: 200px;}
+      .desc {font-size: 20px;}
+      .features-title {font-size: 34px;}
+      .feat-text {font-size: 20px;}
+      .btn {font-size: 20px;padding: 18px;}
+      .footer {font-size: 16px;}
+    }
+    /* شاشات 4K */
+    @media (min-width: 1920px) {
+      .wrap {padding: 60px 0;}
+      .card {width: 900px;padding: 44px 60px 66px;}
+      .download-title {font-size: 38px;}
+      .logo {width: 400px;height: 240px;}
+      .desc {font-size: 22px;}
+      .features-title {font-size: 38px;}
+      .feat-text {font-size: 22px;}
+      .btn {font-size: 22px;padding: 20px;}
+      .footer {font-size: 18px;}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" role="main">
+      <div class="header">
+        <div class="download-title">تحميل التطبيق</div>
+        <div class="logo-wrap">
+          <div class="logo">
+            <img src="logo.png" alt="شعار التطبيق" id="appLogo"/>
+          </div>
+        </div>
+        <div class="desc">تطبيق انماكس افضل تطبيق لمشاهده افلام و مسلسلات الكرتون بالدبلجه و الترجمه العربيه بجوده عاليه</div>
+      </div>
+      <div class="features">
+        <div class="features-title">المميزات</div>
+        <div class="feat"><div class="num">1</div><div class="feat-text">مشاهده مجانيه و بدون اعلانات مزعجه</div></div>
+        <div class="feat"><div class="num">2</div><div class="feat-text">مكتبه ضخمه من افلام و مسلسلات الكرتون بالدبلجه و الترجمه العربيه</div></div>
+        <div class="feat"><div class="num">3</div><div class="feat-text">يعمل لكل الاجهزه القويه و الضعيفه</div></div>
+      </div>
+      <div class="ctas">
+        <a id="downloadBtn" class="btn" href="#" role="button" aria-pressed="false">تنزيل التطبيق <span class="loader" aria-hidden="true"></span></a>
+        <a id="instagramBtn" class="btn secondary" href="https://www.instagram.com/its.saifx?igsh=MmhsZ21rdGdxZmhy" target="_blank">حساب الانستغرام</a>
+        <a id="youtubeBtn" class="btn secondary" href="https://youtube.com/@saixsaix-r4n?si=JwftrWJa2Bzqmj5Y" target="_blank">قناة اليوتيوب</a>
+        <a id="telegramBtn" class="btn secondary glass" href="https://t.me/Animax_cartoon" target="_blank">انضم إلى قناة التلجرام</a>
+      </div>
+    </div>
+    <div class="footer">made by Mohammed Amin</div>
+  </div>
+  <script>
+    const links = {
+      download: 'https://drive.google.com/file/d/1X9my65QXY5fOg-5X6LSbO9uYN_gs1gg-/view?usp=drivesdk',
+      instagram: 'https://www.instagram.com/its.saifx?igsh=MmhsZ21rdGdxZmhy',
+      youtube: 'https://youtube.com/@saixsaix-r4n?si=JwftrWJa2Bzqmj5Y',
+      telegram: 'https://t.me/Animax_cartoon'
+    };
+    const downloadBtn = document.getElementById('downloadBtn');
+    let animTimeout = null;
+    downloadBtn.addEventListener('click', (e)=>{
+      e.preventDefault();
+      if(downloadBtn.classList.contains('loading')) return;
+      downloadBtn.classList.add('loading');
+      downloadBtn.setAttribute('aria-pressed','true');
+      animTimeout = setTimeout(()=>{
+        window.open(links.download,'_blank');
+        downloadBtn.classList.remove('loading');
+        downloadBtn.setAttribute('aria-pressed','false');
+      },700);
+    });
+  </script>
+</body>
+</html>
